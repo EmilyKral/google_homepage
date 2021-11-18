@@ -18,19 +18,21 @@ function searchAgain(e) {
 }
 
 function displayResults(data) {
-	let search;
-	if (data.searchTerm.trim().toLowerCase() === "pingu") {
-		search = "pingu";
-	} else if (data.searchTerm) {
-		search = "javascript";
-	}
+	let search = data.searchTerm.trim().toLowerCase();
 
 	fetch(`http://localhost:3000/search/${search}`)
-		.then(response => response.json())
-		.then(data => {
-			addAllResults(data.sites);
-			clearSearchServer();
-		});
+	.then(response => response.json())
+	.then(data => {
+		addAllResults(data.sites);
+		clearSearchServer();
+	})
+	.catch(e => {
+		let noResultsP = document.createElement("p");
+		noResultsP.textContent = "No results found for this search term";
+		noResultsP.style.fontSize = "20px";
+		let main = document.querySelector("main");
+		main.appendChild(noResultsP);
+	})
 }
 
 function clearSearchServer() {
@@ -47,6 +49,7 @@ function clearSearchServer() {
 
 function addAllResults(array) {
 	array.forEach(result => addResult(result));
+
 }
 
 function addResult(result) {

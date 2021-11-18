@@ -8,15 +8,16 @@ searchButton.addEventListener("click", search);
 function feelingLucky(e) {
 	e.preventDefault();
 	let searchTerm = mainSearch.value;
-	if (searchTerm.trim().toLowerCase() === "pingu") {
-		searchTerm = "pingu";
-	} else {
-		searchTerm = "javascript";
-	}
+	searchTerm = searchTerm.trim().toLowerCase();
 	fetch(`http://localhost:3000/search/${searchTerm}/random`)
-		.then(response => response.json())
-		.then(data => {
+	.then(response => response.json())
+	.then(data => {
+		if(data.url){
 			window.location = data.url;
+		} else {
+			storeSearchResult(searchTerm);
+			location.href = "./search-results.html";
+		}
 		});
 }
 
