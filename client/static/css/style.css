@@ -1,0 +1,59 @@
+html,
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+}
+
+* {
+	font-family: arial, sans-serif;
+	font-size: 14px;
+}
+
+header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 6px;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+}
+
+.right {
+	justify-content: flex-end;
+	margin-right: 20px;
+}
+
+.left {
+	justify-content: flex-start;
+	margin-left: 20px;
+}
+
+.icon-div {
+	height: 32px;
+	width: 32px;
+	border-radius: 50%;
+}
+
+.apps {
+	width: 16px;
+	margin: 8px;
+}
+
+.profile_pic {
+	width: 32px;
+	border-radius: 50%;
+	margin: 0 10px;
+}
+
+.footer {
+	display: flex;
+	align-items: center;
+}
+
+footer {
+	background-color: rgb(224, 224, 224);
+}

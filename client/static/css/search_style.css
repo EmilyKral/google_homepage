@@ -1,0 +1,32 @@
+header {
+	border-bottom: 1px solid grey;
+}
+
+#search-logo {
+	width: 92px;
+}
+
+input {
+	width:500px;
+	border-radius: 8px;
+	margin-left: 50px;
+	height: 30px;
+}
+
+
+main {
+	margin-left: 100px;
+	width: 690px;
+}
+
+.url {
+	margin-bottom: 4px;
+}
+
+h3 {
+	margin: 4px 0;
+}
+
+.description {
+	margin-top: 4px;
+}
