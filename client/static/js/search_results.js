@@ -1,7 +1,20 @@
-function init() {
+const searchBar = document.querySelector("input");
+
+console.log(searchBar);
+searchBar.addEventListener("keyup", searchAgain);
+
+function fetchResults() {
 	fetch("http://localhost:3000/store")
 		.then(response => response.json())
 		.then(displayResults);
+}
+
+function searchAgain(e) {
+	let searchTerm = searchBar.value;
+	if (e.keycode === 13) {
+		storeSearchResult(searchTerm);
+		fetchResults();
+	}
 }
 
 function displayResults(data) {
@@ -82,4 +95,16 @@ function createResultSection(url, title, desc) {
 	main.appendChild(section);
 }
 
-init();
+function storeSearchResult(searchTerm) {
+	const options = {
+		method: "PUT",
+		body: JSON.stringify({ searchTerm: searchTerm }),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	};
+
+	fetch("http://localhost:3000/store", options);
+}
+
+fetchResults();
