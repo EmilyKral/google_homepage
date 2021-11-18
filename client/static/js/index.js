@@ -10,14 +10,14 @@ function feelingLucky(e) {
 	let searchTerm = mainSearch.value;
 	searchTerm = searchTerm.trim().toLowerCase();
 	fetch(`http://localhost:3000/search/${searchTerm}/random`)
-	.then(response => response.json())
-	.then(data => {
-		if(data.url){
-			window.location = data.url;
-		} else {
-			storeSearchResult(searchTerm);
-			location.href = "./search-results.html";
-		}
+		.then(response => response.json())
+		.then(data => {
+			if (data.url) {
+				window.location = data.url;
+			} else if (searchTerm) {
+				storeSearchResult(searchTerm);
+				location.href = "./search-results.html";
+			}
 		});
 }
 

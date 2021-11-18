@@ -1,6 +1,4 @@
-const searchBar = document.querySelector("input");
-
-console.log(searchBar);
+const searchBar = document.querySelector("#searchbar");
 searchBar.addEventListener("keyup", searchAgain);
 
 function fetchResults() {
@@ -11,45 +9,34 @@ function fetchResults() {
 
 function searchAgain(e) {
 	let searchTerm = searchBar.value;
-	if (e.keycode === 13) {
+	if (e.key === "Enter") {
 		storeSearchResult(searchTerm);
-		fetchResults();
+		setTimeout(fetchResults, 0);
 	}
 }
 
 function displayResults(data) {
+	removeResults();
+	searchBar.value = data.searchTerm;
 	let search = data.searchTerm.trim().toLowerCase();
-
 	fetch(`http://localhost:3000/search/${search}`)
-	.then(response => response.json())
-	.then(data => {
-		addAllResults(data.sites);
-		clearSearchServer();
-	})
-	.catch(e => {
-		let noResultsP = document.createElement("p");
-		noResultsP.textContent = "No results found for this search term";
-		noResultsP.style.fontSize = "20px";
-		let main = document.querySelector("main");
-		main.appendChild(noResultsP);
-	})
+		.then(response => response.json())
+		.then(data => {
+			addAllResults(data.sites);
+		})
+		.catch(noResultsFound);
 }
 
-function clearSearchServer() {
-	const options = {
-		method: "PUT",
-		body: JSON.stringify({ searchTerm: "" }),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	};
-
-	fetch("http://localhost:3000/store", options);
+function noResultsFound() {
+	let noResultsP = document.createElement("p");
+	noResultsP.textContent = "No results found for this search term";
+	noResultsP.style.fontSize = "20px";
+	let main = document.querySelector("main");
+	main.appendChild(noResultsP);
 }
 
 function addAllResults(array) {
 	array.forEach(result => addResult(result));
-
 }
 
 function addResult(result) {
@@ -57,6 +44,13 @@ function addResult(result) {
 	const title = result.title;
 	const description = result.description;
 	createResultSection(url, title, description);
+}
+
+function removeResults() {
+	const main = document.querySelector("main");
+	while (main.firstChild) {
+		main.firstChild.remove();
+	}
 }
 
 function makeShortUrl(url) {
